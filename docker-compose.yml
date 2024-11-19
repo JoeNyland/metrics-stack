@@ -1,0 +1,52 @@
+---
+services:
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      GF_SERVER_DOMAIN: grafana
+      GF_SERVER_ROOT_URL: https://grafana/
+      GF_SECURITY_ADMIN_EMAIL: admin@home.joe.nyland.io
+      GF_SMTP_ENABLED: true
+      GF_SMTP_HOST: smtp.home.joe.nyland.io:25
+      GF_SMTP_SKIP_VERIFY: true
+      GF_SMTP_FROM_ADDRESS: grafana@home.joe.nyland.io
+    labels:
+      traefik.enable: true
+      traefik.http.services.grafana.loadbalancer.server.port: 3000
+      traefik.http.routers.grafana.rule: Host(`grafana`)
+      traefik.http.routers.grafana.middlewares: trusted-ipallowlist
+    volumes:
+      - /containers/grafana:/var/lib/grafana
+
+  influxdb:
+    image: influxdb
+    container_name: influxdb
+    restart: unless-stopped
+    network_mode: host
+    labels:
+      traefik.enable: true
+      traefik.http.services.influxdb.loadbalancer.server.port: 8086
+      traefik.http.routers.influxdb.rule: Host(`influxdb`)
+      traefik.http.routers.influxdb.middlewares: trusted-ipallowlist
+    volumes:
+      - /containers/influxdb:/var/lib/influxdb2
+
+  telegraf:
+    image: telegraf
+    container_name: telegraf
+    restart: unless-stopped
+    network_mode: host
+    user: telegraf:995 # 995 is the GID of the Docker group, allowing the container to read from the Docker socket
+    environment:
+      HOST_PROC: /hostfs/proc
+      HOST_SYS: /hostfs/sys
+      HOST_ETC: /hostfs/etc
+      HOST_MOUNT_PREFIX: /hostfs
+    volumes:
+      - /containers/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /sys:/sys:ro
+      - /:/hostfs:ro
