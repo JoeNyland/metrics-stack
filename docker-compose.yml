@@ -32,7 +32,8 @@ services:
       traefik.http.routers.influxdb.rule: Host(`influxdb`)
       traefik.http.routers.influxdb.middlewares: trusted-ipallowlist
     volumes:
-      - /containers/influxdb:/var/lib/influxdb2
+      - /containers/influxdb/config:/etc/influxdb2
+      - /containers/influxdb/data:/var/lib/influxdb2
 
   telegraf:
     image: telegraf
