@@ -57,6 +57,7 @@ services:
     container_name: prometheus
     restart: unless-stopped
     network_mode: host
+    command: "--storage.tsdb.retention.time=3y" # Defaults to 15 days
     volumes:
       - /containers/prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - /containers/prometheus/data:/prometheus
