@@ -69,3 +69,9 @@ services:
       traefik.http.services.prometheus.loadbalancer.server.port: 9090
       traefik.http.routers.prometheus.rule: Host(`prometheus`)
       traefik.http.routers.prometheus.middlewares: trusted-ipallowlist
+
+  graphql_exporter:
+    image: ricardbejarano/graphql_exporter
+    container_name: graphql-exporter
+    restart: unless-stopped
+    network_mode: host
