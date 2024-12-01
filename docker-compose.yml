@@ -39,6 +39,32 @@ services:
       traefik.http.routers.prometheus.rule: Host(`prometheus`)
       traefik.http.routers.prometheus.middlewares: trusted-ipallowlist
 
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor
+    restart: unless-stopped
+    network_mode: host
+    command:
+      - "--port=8181" # Default is 8080
+      - "--docker_only=true"
+      - "--housekeeping_interval=5s" # How often stats are collected
+      - "--store_container_labels=false"
+      - "--disable_root_cgroup_stats=true"
+      - "--disable_metrics=disk,hugetlb,sched"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    devices:
+      - /dev/zfs:/dev/zfs
+    environment:
+      CADVISOR_HEALTHCHECK_URL: http://localhost:8181/healthz # Default is http://localhost:8080/healthz
+    labels:
+      traefik.enable: true
+      traefik.http.services.cadvisor.loadbalancer.server.port: 8181
+      traefik.http.routers.cadvisor.rule: Host(`cadvisor`)
+      traefik.http.routers.cadvisor.middlewares: trusted-ipallowlist
+
   graphql_exporter:
     image: ricardbejarano/graphql_exporter
     container_name: graphql-exporter
