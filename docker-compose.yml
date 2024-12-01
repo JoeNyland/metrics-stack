@@ -21,37 +21,6 @@ services:
     volumes:
       - /containers/grafana:/var/lib/grafana
 
-  influxdb:
-    image: influxdb
-    container_name: influxdb
-    restart: unless-stopped
-    network_mode: host
-    labels:
-      traefik.enable: true
-      traefik.http.services.influxdb.loadbalancer.server.port: 8086
-      traefik.http.routers.influxdb.rule: Host(`influxdb`)
-      traefik.http.routers.influxdb.middlewares: trusted-ipallowlist
-    volumes:
-      - /containers/influxdb/config:/etc/influxdb2
-      - /containers/influxdb/data:/var/lib/influxdb2
-
-  telegraf:
-    image: telegraf
-    container_name: telegraf
-    restart: unless-stopped
-    network_mode: host
-    user: telegraf:995 # 995 is the GID of the Docker group, allowing the container to read from the Docker socket
-    environment:
-      HOST_PROC: /hostfs/proc
-      HOST_SYS: /hostfs/sys
-      HOST_ETC: /hostfs/etc
-      HOST_MOUNT_PREFIX: /hostfs
-    volumes:
-      - /containers/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /sys:/sys:ro
-      - /:/hostfs:ro
-
   prometheus:
     image: prom/prometheus
     container_name: prometheus
