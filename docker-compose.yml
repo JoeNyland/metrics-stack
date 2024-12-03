@@ -60,7 +60,7 @@ services:
     environment:
       CADVISOR_HEALTHCHECK_URL: http://localhost:8181/healthz # Default is http://localhost:8080/healthz
 
-  graphql_exporter:
+  graphql-exporter:
     image: ricardbejarano/graphql_exporter
     container_name: graphql-exporter
     restart: unless-stopped
