@@ -59,11 +59,6 @@ services:
       - /dev/zfs:/dev/zfs
     environment:
       CADVISOR_HEALTHCHECK_URL: http://localhost:8181/healthz # Default is http://localhost:8080/healthz
-    labels:
-      traefik.enable: true
-      traefik.http.services.cadvisor.loadbalancer.server.port: 8181
-      traefik.http.routers.cadvisor.rule: Host(`cadvisor`)
-      traefik.http.routers.cadvisor.middlewares: trusted-ipallowlist
 
   graphql_exporter:
     image: ricardbejarano/graphql_exporter
