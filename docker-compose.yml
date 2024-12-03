@@ -2,7 +2,6 @@
 services:
   grafana:
     image: grafana/grafana
-    container_name: grafana
     restart: unless-stopped
     ports:
       - 3000:3000
@@ -23,7 +22,6 @@ services:
 
   prometheus:
     image: prom/prometheus
-    container_name: prometheus
     restart: unless-stopped
     network_mode: host # Host networking is required for Prometheus to get an IPv6 address to be able to scrape IPv6 targets
     command:
