@@ -4,7 +4,8 @@ services:
     image: grafana/grafana
     container_name: grafana
     restart: unless-stopped
-    network_mode: host
+    ports:
+      - 3000:3000
     environment:
       GF_SERVER_DOMAIN: grafana
       GF_SERVER_ROOT_URL: https://grafana/
@@ -15,7 +16,6 @@ services:
       GF_SMTP_FROM_ADDRESS: grafana@home.joe.nyland.io
     labels:
       traefik.enable: true
-      traefik.http.services.grafana.loadbalancer.server.port: 3000
       traefik.http.routers.grafana.rule: Host(`grafana`)
       traefik.http.routers.grafana.middlewares: trusted-ipallowlist
     volumes:
