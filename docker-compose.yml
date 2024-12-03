@@ -42,7 +42,8 @@ services:
   cadvisor:
     image: gcr.io/cadvisor/cadvisor
     restart: unless-stopped
-    network_mode: host
+    ports:
+      - 8181:8181
     command:
       - "--port=8181" # Default is 8080
       - "--docker_only=true"
