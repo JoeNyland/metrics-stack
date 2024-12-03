@@ -25,7 +25,8 @@ services:
     image: prom/prometheus
     container_name: prometheus
     restart: unless-stopped
-    network_mode: host
+    ports:
+      - 9090:9090
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--storage.tsdb.path=/prometheus"
@@ -35,7 +36,6 @@ services:
       - /containers/prometheus/data:/prometheus
     labels:
       traefik.enable: true
-      traefik.http.services.prometheus.loadbalancer.server.port: 9090
       traefik.http.routers.prometheus.rule: Host(`prometheus`)
       traefik.http.routers.prometheus.middlewares: trusted-ipallowlist
 
