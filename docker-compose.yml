@@ -63,7 +63,8 @@ services:
   graphql-exporter:
     image: ricardbejarano/graphql_exporter
     restart: unless-stopped
-    network_mode: host
+    ports:
+      - 9199:9199
 
   plex-exporter:
     image: ghcr.io/jsclayton/prometheus-plex-exporter
