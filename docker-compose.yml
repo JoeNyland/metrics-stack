@@ -25,7 +25,7 @@ services:
     image: prom/prometheus
     container_name: prometheus
     restart: unless-stopped
-    network_mode: host
+    network_mode: host # Host networking is required for Prometheus to get an IPv6 address to be able to scrape IPv6 targets
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--storage.tsdb.path=/prometheus"
