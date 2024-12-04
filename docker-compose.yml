@@ -67,6 +67,7 @@ services:
 
   plex-exporter:
     image: ghcr.io/jsclayton/prometheus-plex-exporter
+    restart: unless-stopped
     ports:
       - 32490:9000
     environment:
