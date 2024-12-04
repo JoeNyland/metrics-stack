@@ -72,4 +72,4 @@ services:
       - 32490:9000
     environment:
       PLEX_SERVER: ${PLEX_SERVER:-http://plex:32400}
-      PLEX_TOKEN: ${PLEX_TOKEN:?plex token is required}
+      PLEX_TOKEN: ${PLEX_TOKEN:?PLEX_TOKEN is required}
