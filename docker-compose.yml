@@ -84,6 +84,7 @@ services:
       PORT: 9707
       URL: http://sonarr:8989
       API_KEY: ${SONARR_API_KEY:?SONARR_API_KEY is required}
+      ENABLE_ADDITIONAL_METRICS: true # Allows reporting of additional metrics, including quality
 
   radarr-exporter:
     image: ghcr.io/onedr0p/exportarr:v2.0
@@ -106,6 +107,7 @@ services:
       PORT: 9709
       URL: http://lidarr:8686
       API_KEY: ${LIDARR_API_KEY:?LIDARR_API_KEY is required}
+      ENABLE_ADDITIONAL_METRICS: true # Allows reporting of additional metrics, including quality
 
   prowlarr-exporter:
     image: ghcr.io/onedr0p/exportarr:v2.0
@@ -139,3 +141,4 @@ services:
       PORT: 9769
       URL: http://whisparr:6969
       API_KEY: ${WHISPARR_API_KEY:?WHISPARR_API_KEY is required}
+      ENABLE_ADDITIONAL_METRICS: true # Allows reporting of additional metrics, including quality
