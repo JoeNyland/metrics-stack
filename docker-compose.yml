@@ -134,8 +134,8 @@ services:
     restart: unless-stopped
     command: sonarr
     ports:
-      - 9712:9712
+      - 9769:9769
     environment:
-      PORT: 9712
+      PORT: 9769
       URL: http://whisparr:6969
       API_KEY: ${WHISPARR_API_KEY:?WHISPARR_API_KEY is required}
