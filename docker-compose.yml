@@ -23,7 +23,8 @@ services:
   prometheus:
     image: prom/prometheus
     restart: unless-stopped
-    network_mode: host # Host networking is required for Prometheus to get an IPv6 address to be able to scrape IPv6 targets
+    ports:
+      - 9090:9090
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--storage.tsdb.path=/prometheus"
@@ -33,7 +34,6 @@ services:
       - /containers/prometheus/data:/prometheus
     labels:
       traefik.enable: true
-      traefik.http.services.prometheus.loadbalancer.server.port: 9090
       traefik.http.routers.prometheus.rule: Host(`prometheus`)
       traefik.http.routers.prometheus.middlewares: trusted-ipallowlist
 
