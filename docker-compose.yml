@@ -34,6 +34,7 @@ services:
     volumes:
       - /containers/prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - /containers/prometheus/data:/prometheus
+      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
     labels:
       traefik.enable: true
       traefik.http.routers.prometheus.rule: Host(`prometheus`)
