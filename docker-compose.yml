@@ -3,8 +3,6 @@ services:
   grafana:
     image: grafana/grafana
     restart: unless-stopped
-    ports:
-      - 3000:3000
     networks:
       - default
       - proxy
@@ -26,8 +24,6 @@ services:
   prometheus:
     image: prom/prometheus
     restart: unless-stopped
-    ports:
-      - 9090:9090
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--storage.tsdb.path=/prometheus"
@@ -43,10 +39,7 @@ services:
   cadvisor:
     image: gcr.io/cadvisor/cadvisor
     restart: unless-stopped
-    ports:
-      - 8181:8181
     command:
-      - "--port=8181" # Default is 8080
       - "--docker_only=true"
       - "--housekeeping_interval=5s" # How often stats are collected
       - "--store_container_labels=false"
@@ -59,20 +52,16 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
     devices:
       - /dev/zfs:/dev/zfs
-    environment:
-      CADVISOR_HEALTHCHECK_URL: http://localhost:8181/healthz # Default is http://localhost:8080/healthz
 
   graphql-exporter:
     image: ricardbejarano/graphql_exporter
     restart: unless-stopped
-    ports:
-      - 9199:9199
 
   plex-exporter:
     image: ghcr.io/jsclayton/prometheus-plex-exporter
     restart: unless-stopped
-    ports:
-      - 32490:9000
+    expose:
+      - 9000
     environment:
       PLEX_SERVER: ${PLEX_SERVER:-http://plex:32400}
       PLEX_TOKEN: ${PLEX_TOKEN:?PLEX_TOKEN is required}
@@ -81,8 +70,8 @@ services:
     image: ghcr.io/onedr0p/exportarr:v2.0
     restart: unless-stopped
     command: sonarr
-    ports:
-      - 9707:9707
+    expose:
+      - 9707
     environment:
       PORT: 9707
       URL: http://sonarr:8989
@@ -93,8 +82,8 @@ services:
     image: ghcr.io/onedr0p/exportarr:v2.0
     restart: unless-stopped
     command: radarr
-    ports:
-      - 9708:9708
+    expose:
+      - 9708
     environment:
       PORT: 9708
       URL: http://radarr:7878
@@ -104,8 +93,8 @@ services:
     image: ghcr.io/onedr0p/exportarr:v2.0
     restart: unless-stopped
     command: lidarr
-    ports:
-      - 9709:9709
+    expose:
+      - 9709
     environment:
       PORT: 9709
       URL: http://lidarr:8686
@@ -116,8 +105,8 @@ services:
     image: ghcr.io/onedr0p/exportarr:v2.0
     restart: unless-stopped
     command: prowlarr
-    ports:
-      - 9710:9710
+    expose:
+      - 9710
     environment:
       PORT: 9710
       URL: http://prowlarr:9696
@@ -127,8 +116,8 @@ services:
     image: ghcr.io/onedr0p/exportarr:v2.0
     restart: unless-stopped
     command: sabnzbd
-    ports:
-      - 9711:9711
+    expose:
+      - 9711
     environment:
       PORT: 9711
       URL: http://sabnzbd:8090
@@ -138,8 +127,8 @@ services:
     image: ghcr.io/onedr0p/exportarr:v2.0
     restart: unless-stopped
     command: sonarr
-    ports:
-      - 9769:9769
+    expose:
+      - 9769
     environment:
       PORT: 9769
       URL: http://whisparr:6969
