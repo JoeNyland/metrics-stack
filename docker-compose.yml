@@ -5,6 +5,9 @@ services:
     restart: unless-stopped
     ports:
       - 3000:3000
+    networks:
+      - default
+      - proxy
     environment:
       GF_SERVER_DOMAIN: grafana
       GF_SERVER_ROOT_URL: https://grafana/
@@ -146,3 +149,5 @@ services:
 networks:
   default:
     enable_ipv6: true
+  proxy:
+    external: true
