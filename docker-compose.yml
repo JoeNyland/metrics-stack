@@ -24,6 +24,9 @@ services:
   prometheus:
     image: prom/prometheus
     restart: unless-stopped
+    networks:
+      - default
+      - proxy
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--storage.tsdb.path=/prometheus"
