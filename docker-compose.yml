@@ -27,6 +27,7 @@ services:
     networks:
       - default
       - proxy
+      - metrics
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--storage.tsdb.path=/prometheus"
@@ -60,12 +61,18 @@ services:
   graphql-exporter:
     image: ricardbejarano/graphql_exporter
     restart: unless-stopped
+    networks:
+      - default
+      - metrics
 
   plex-exporter:
     image: ghcr.io/jsclayton/prometheus-plex-exporter
     restart: unless-stopped
     expose:
       - 9000
+    networks:
+      - default
+      - metrics
     environment:
       PLEX_SERVER: ${PLEX_SERVER:-http://plex:32400}
       PLEX_TOKEN: ${PLEX_TOKEN:?PLEX_TOKEN is required}
@@ -76,6 +83,9 @@ services:
     command: sonarr
     expose:
       - 9707
+    networks:
+      - default
+      - metrics
     environment:
       PORT: 9707
       URL: http://sonarr:8989
@@ -88,6 +98,9 @@ services:
     command: radarr
     expose:
       - 9708
+    networks:
+      - default
+      - metrics
     environment:
       PORT: 9708
       URL: http://radarr:7878
@@ -99,6 +112,9 @@ services:
     command: lidarr
     expose:
       - 9709
+    networks:
+      - default
+      - metrics
     environment:
       PORT: 9709
       URL: http://lidarr:8686
@@ -111,6 +127,9 @@ services:
     command: prowlarr
     expose:
       - 9710
+    networks:
+      - default
+      - metrics
     environment:
       PORT: 9710
       URL: http://prowlarr:9696
@@ -122,6 +141,9 @@ services:
     command: sabnzbd
     expose:
       - 9711
+    networks:
+      - default
+      - metrics
     environment:
       PORT: 9711
       URL: http://sabnzbd:8090
@@ -133,6 +155,9 @@ services:
     command: sonarr
     expose:
       - 9769
+    networks:
+      - default
+      - metrics
     environment:
       PORT: 9769
       URL: http://whisparr:6969
@@ -144,3 +169,4 @@ networks:
     enable_ipv6: true
   proxy:
     external: true
+  metrics:
