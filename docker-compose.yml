@@ -164,6 +164,18 @@ services:
       API_KEY: ${WHISPARR_API_KEY:?WHISPARR_API_KEY is required}
       ENABLE_ADDITIONAL_METRICS: true # Allows reporting of additional metrics, including quality
 
+  unpoller:
+    image: ghcr.io/unpoller/unpoller
+    restart: unless-stopped
+    expose:
+      - 9130
+    environment:
+      UP_UNIFI_DEFAULT_URL: https://cloud-key-gen2-plus.home.joe.nyland.io
+      UP_UNIFI_DEFAULT_USER: ${UP_UNIFI_DEFAULT_USER}
+      UP_UNIFI_DEFAULT_PASS: ${UP_UNIFI_DEFAULT_PASS}
+      UP_PROMETHEUS_NAMESPACE: unifi
+      UP_INFLUXDB_DISABLE: true
+
 networks:
   default:
     enable_ipv6: true
