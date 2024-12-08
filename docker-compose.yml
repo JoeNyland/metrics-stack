@@ -170,3 +170,4 @@ networks:
   proxy:
     external: true
   metrics:
+    name: metrics
