@@ -146,7 +146,7 @@ services:
       - metrics
     environment:
       PORT: 9711
-      URL: http://sabnzbd:8090
+      URL: http://sabnzbd:8080
       API_KEY: ${SABNZBD_API_KEY:?SABNZBD_API_KEY is required}
 
   whisparr-exporter:
