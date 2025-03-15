@@ -1,7 +1,7 @@
 ---
 services:
   grafana:
-    container_name: dashboard-grafana
+    container_name: metrics-grafana
     image: grafana/grafana
     restart: unless-stopped
     networks:
@@ -20,10 +20,10 @@ services:
       traefik.http.routers.grafana.rule: Host(`grafana`)
       traefik.http.routers.grafana.middlewares: trusted-ipallowlist
     volumes:
-      - /containers/dashboard-grafana:/var/lib/grafana
+      - /containers/metrics-grafana:/var/lib/grafana
 
   prometheus:
-    container_name: dashboard-prometheus
+    container_name: metrics-prometheus
     image: prom/prometheus
     restart: unless-stopped
     networks:
@@ -35,8 +35,8 @@ services:
       - "--storage.tsdb.path=/prometheus"
       - "--storage.tsdb.retention.time=3y" # Defaults to 15 days
     volumes:
-      - /containers/dashboard-prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-      - /containers/dashboard-prometheus/data:/prometheus
+      - /containers/metrics-prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - /containers/metrics-prometheus/data:/prometheus
       - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
     labels:
       traefik.enable: true
@@ -44,7 +44,7 @@ services:
       traefik.http.routers.prometheus.middlewares: trusted-ipallowlist
 
   cadvisor:
-    container_name: dashboard-cadvisor
+    container_name: metrics-cadvisor
     image: gcr.io/cadvisor/cadvisor
     restart: unless-stopped
     command:
@@ -62,7 +62,7 @@ services:
       - /dev/zfs:/dev/zfs
 
   graphql-exporter:
-    container_name: dashboard-graphql-exporter
+    container_name: metrics-graphql-exporter
     image: ricardbejarano/graphql_exporter
     restart: unless-stopped
     networks:
@@ -70,7 +70,7 @@ services:
       - metrics
 
   plex-exporter:
-    container_name: dashboard-plex-exporter
+    container_name: metrics-plex-exporter
     image: ghcr.io/jsclayton/prometheus-plex-exporter
     restart: unless-stopped
     expose:
@@ -83,7 +83,7 @@ services:
       PLEX_TOKEN: ${PLEX_TOKEN:?PLEX_TOKEN is required}
 
   sonarr-exporter:
-    container_name: dashboard-sonarr-exporter
+    container_name: metrics-sonarr-exporter
     image: ghcr.io/onedr0p/exportarr:v2.0
     restart: unless-stopped
     command: sonarr
@@ -99,7 +99,7 @@ services:
       ENABLE_ADDITIONAL_METRICS: true # Allows reporting of additional metrics, including quality
 
   radarr-exporter:
-    container_name: dashboard-radarr-exporter
+    container_name: metrics-radarr-exporter
     image: ghcr.io/onedr0p/exportarr:v2.0
     restart: unless-stopped
     command: radarr
@@ -114,7 +114,7 @@ services:
       API_KEY: ${RADARR_API_KEY:?RADARR_API_KEY is required}
 
   lidarr-exporter:
-    container_name: dashboard-lidarr-exporter
+    container_name: metrics-lidarr-exporter
     image: ghcr.io/onedr0p/exportarr:v2.0
     restart: unless-stopped
     command: lidarr
@@ -130,7 +130,7 @@ services:
       ENABLE_ADDITIONAL_METRICS: true # Allows reporting of additional metrics, including quality
 
   prowlarr-exporter:
-    container_name: dashboard-prowlarr-exporter
+    container_name: metrics-prowlarr-exporter
     image: ghcr.io/onedr0p/exportarr:v2.0
     restart: unless-stopped
     command: prowlarr
@@ -145,7 +145,7 @@ services:
       API_KEY: ${PROWLARR_API_KEY:?PROWLARR_API_KEY is required}
 
   sabnzbd-exporter:
-    container_name: dashboard-sabnzbd-exporter
+    container_name: metrics-sabnzbd-exporter
     image: ghcr.io/onedr0p/exportarr:v2.0
     restart: unless-stopped
     command: sabnzbd
@@ -160,7 +160,7 @@ services:
       API_KEY: ${SABNZBD_API_KEY:?SABNZBD_API_KEY is required}
 
   whisparr-exporter:
-    container_name: dashboard-whisparr-exporter
+    container_name: metrics-whisparr-exporter
     image: ghcr.io/onedr0p/exportarr:v2.0
     restart: unless-stopped
     command: sonarr
@@ -176,7 +176,7 @@ services:
       ENABLE_ADDITIONAL_METRICS: true # Allows reporting of additional metrics, including quality
 
   unpoller:
-    container_name: dashboard-unpoller
+    container_name: metrics-unpoller
     image: ghcr.io/unpoller/unpoller
     restart: unless-stopped
     expose:
