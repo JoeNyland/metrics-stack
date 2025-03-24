@@ -41,7 +41,7 @@ services:
     labels:
       traefik.enable: true
       traefik.http.routers.prometheus.rule: Host(`prometheus`)
-      traefik.http.routers.prometheus.middlewares: trusted-ipallowlist
+      traefik.http.routers.prometheus.middlewares: trusted-ipallowlist, authentik
 
   cadvisor:
     container_name: metrics-cadvisor
