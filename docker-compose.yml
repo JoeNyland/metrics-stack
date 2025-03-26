@@ -63,7 +63,7 @@ services:
 
   graphql-exporter:
     container_name: metrics-graphql-exporter
-    image: ricardbejarano/graphql_exporter
+    image: ricardbejarano/graphql_exporter:v1.2.3
     restart: unless-stopped
     networks:
       - default
