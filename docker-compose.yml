@@ -182,7 +182,7 @@ services:
     expose:
       - 9130
     environment:
-      UP_UNIFI_DEFAULT_URL: https://cloud-key-gen2-plus.home.joe.nyland.io
+      UP_UNIFI_DEFAULT_URL: ${UP_UNIFI_DEFAULT_URL:?UP_UNIFI_DEFAULT_URL is required}
       UP_UNIFI_DEFAULT_USER: ${UP_UNIFI_DEFAULT_USER:?UP_UNIFI_DEFAULT_USER is required}
       UP_UNIFI_DEFAULT_PASS: ${UP_UNIFI_DEFAULT_PASS:?UP_UNIFI_DEFAULT_PASS is required}
       UP_PROMETHEUS_NAMESPACE: unifi
