@@ -163,7 +163,7 @@ services:
     container_name: metrics-whisparr-exporter
     image: ghcr.io/onedr0p/exportarr:v2.0
     restart: unless-stopped
-    command: sonarr
+    command: radarr
     expose:
       - 9769
     networks:
