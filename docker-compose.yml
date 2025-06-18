@@ -96,7 +96,7 @@ services:
       PORT: 9707
       URL: http://sonarr:8989
       API_KEY: ${SONARR_API_KEY:?SONARR_API_KEY is required}
-      ENABLE_ADDITIONAL_METRICS: true # Allows reporting of additional metrics, including quality
+      ENABLE_ADDITIONAL_METRICS: ${SONARR_ENABLE_ADDITIONAL_METRICS:-false} # Allows reporting of additional metrics, including quality
 
   radarr-exporter:
     container_name: metrics-radarr-exporter
@@ -127,7 +127,7 @@ services:
       PORT: 9709
       URL: http://lidarr:8686
       API_KEY: ${LIDARR_API_KEY:?LIDARR_API_KEY is required}
-      ENABLE_ADDITIONAL_METRICS: true # Allows reporting of additional metrics, including quality
+      ENABLE_ADDITIONAL_METRICS: ${LIDARR_ENABLE_ADDITIONAL_METRICS:-false} # Allows reporting of additional metrics, including quality
 
   prowlarr-exporter:
     container_name: metrics-prowlarr-exporter
