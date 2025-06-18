@@ -173,7 +173,6 @@ services:
       PORT: 9769
       URL: http://whisparr:6969
       API_KEY: ${WHISPARR_API_KEY:?WHISPARR_API_KEY is required}
-      ENABLE_ADDITIONAL_METRICS: true # Allows reporting of additional metrics, including quality
 
   unpoller:
     container_name: metrics-unpoller
