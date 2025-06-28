@@ -187,6 +187,18 @@ services:
       UP_PROMETHEUS_NAMESPACE: unifi
       UP_INFLUXDB_DISABLE: true
 
+  tdarr-exporter:
+    container_name: metrics-tdarr-exporter
+    image: homeylab/tdarr-exporter
+    restart: unless-stopped
+    expose:
+      - 9090
+    networks:
+      - default
+      - metrics
+    environment:
+      TDARR_URL: http://tdarr:8265
+
 networks:
   default:
     enable_ipv6: true
