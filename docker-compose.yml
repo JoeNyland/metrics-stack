@@ -53,7 +53,8 @@ services:
       - default
       - proxy
     volumes:
-      - /containers/metrics-alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+      - /containers/metrics-alertmanager/config/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+      - /containers/metrics-alertmanager/data:/alertmanager
     labels:
       traefik.enable: true
       traefik.http.routers.alertmanager.rule: Host(`alertmanager`)
