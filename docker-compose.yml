@@ -34,6 +34,7 @@ services:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--storage.tsdb.path=/prometheus"
       - "--storage.tsdb.retention.time=3y" # Defaults to 15 days
+      - "--web.external-url=https://prometheus/"
     volumes:
       - /containers/metrics-prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
       - /containers/metrics-prometheus/config/alert_rules.yml:/etc/prometheus/alert_rules.yml:ro
